@@ -1,0 +1,8 @@
+.env
+app/config/config.local.php
+/vendor/
+/.idea/
+/.vscode/
+*.log
+.DS_Store
+/node_modules/

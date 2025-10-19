@@ -32,14 +32,15 @@ if (file_exists(__DIR__ . '/config.local.php')) {
     require_once __DIR__ . '/config.local.php';
 }
 
-// Read from environment variables if available, otherwise use defaults suitable for local XAMPP
-define('DB_HOST', getenv('DB_HOST') !== false ? getenv('DB_HOST') : '127.0.0.1');
-define('DB_PORT', getenv('DB_PORT') !== false ? getenv('DB_PORT') : '3306');
-define('DB_NAME', getenv('DB_NAME') !== false ? getenv('DB_NAME') : 'studypro_devops_php_mysql_project_db');
-define('DB_USER', getenv('DB_USER') !== false ? getenv('DB_USER') : 'root');
+// Read all DB configuration from environment variables (populated from .env if present).
+// Do NOT put real credentials in this file. If a variable is not set, the value will be an empty string.
+define('DB_HOST', getenv('DB_HOST') !== false ? getenv('DB_HOST') : '');
+define('DB_PORT', getenv('DB_PORT') !== false ? getenv('DB_PORT') : '');
+define('DB_NAME', getenv('DB_NAME') !== false ? getenv('DB_NAME') : '');
+define('DB_USER', getenv('DB_USER') !== false ? getenv('DB_USER') : '');
 define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
 
-// Table prefix (like WordPress). Set DB_TABLE_PREFIX in .env if you want a prefix such as "wp_"
+// Table prefix (like WordPress). Set DB_TABLE_PREFIX in .env if you want a prefix such as "wp_"; defaults to empty string.
 define('DB_TABLE_PREFIX', getenv('DB_TABLE_PREFIX') !== false ? getenv('DB_TABLE_PREFIX') : '');
 
 // Recommended timezone

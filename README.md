@@ -26,6 +26,30 @@ Access locally at:
 2. Create the database and table (example SQL below).
 3. Optionally create `app/config/config.local.php` to override DB credentials locally.
 
+### Environment configuration
+
+This project reads configuration from environment variables. For local development an optional `.env` file is provided in the project root. You can either:
+
+- Edit `app/config/config.local.php` (not committed) with your credentials, or
+- Set system environment variables (DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS, DB_TABLE_PREFIX), or
+- Use the included `.env` file and ensure your PHP/Apache process reads those variables (the project will parse `.env` at runtime).
+
+Example `app/config/config.local.php` (create this file locally; do NOT commit):
+
+```php
+<?php
+define('DB_HOST', '127.0.0.1');
+define('DB_PORT', '3306');
+define('DB_NAME', 'studypro_devops_php_mysql_project_db');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+// Optional table prefix - set to empty string for no prefix
+define('DB_TABLE_PREFIX', '');
+?>
+```
+
+The project code uses a `table()` helper function so you only pass the base table name in your code. If you set `DB_TABLE_PREFIX=wp_` the call `table('events')` will become `wp_events` in SQL — no per-table constants needed.
+
 ### Database schema
 
 Run the following SQL to create the database and table:
@@ -51,6 +75,37 @@ CREATE TABLE IF NOT EXISTS events (
 - `delete_event.php` - handles deletion
 - `app/includes/db.php` - PDO connection helper
 - `app/config/config.php` - configuration (do not commit secrets)
+
+## Developer notes
+
+- `.env` is included for convenience (defaults). Values are loaded into the environment if present.
+- The code uses `table('events')` to resolve the real table name with any prefix from `DB_TABLE_PREFIX`.
+- All DB queries use prepared statements (PDO) to avoid injection.
+
+### Quick local checks
+
+Run these in PowerShell to quickly lint PHP files locally (requires PHP CLI in PATH):
+
+```powershell
+php -l .\app\config\config.php
+php -l .\app\includes\db.php
+php -l .\index.php
+php -l .\add_event.php
+php -l .\delete_event.php
+```
+
+If a `php` command is not found, add your PHP CLI to PATH or run lint through the XAMPP PHP executable, e.g.:
+
+```powershell
+"C:\\xampp\\php\\php.exe" -l .\index.php
+```
+
+### Troubleshooting
+
+- If events do not appear, verify DB credentials and that the `events` table exists in the configured database.
+- If you change `DB_TABLE_PREFIX`, existing table names must be updated accordingly (or set prefix to empty string).
+
+Enjoy!
 
 ## Notes
 

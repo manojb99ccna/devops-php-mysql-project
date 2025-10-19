@@ -17,7 +17,7 @@ if ($id === false) {
 
 try {
     $pdo = getPDO();
-    $sql = 'DELETE FROM ' . DB_TABLE_EVENTS . ' WHERE id = :id';
+    $sql = 'DELETE FROM ' . table('events') . ' WHERE id = :id';
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':id' => $id]);
 

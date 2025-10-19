@@ -5,7 +5,7 @@ require_once __DIR__ . '/app/includes/db.php';
 // Fetch events sorted by date (ascending)
 try {
 	$pdo = getPDO();
-	$stmt = $pdo->prepare('SELECT id, title, event_date, location, description, created_at FROM ' . DB_TABLE_EVENTS . ' ORDER BY event_date ASC');
+	$stmt = $pdo->prepare('SELECT id, title, event_date, location, description, created_at FROM ' . table('events') . ' ORDER BY event_date ASC');
 	$stmt->execute();
 	$events = $stmt->fetchAll();
 } catch (Exception $e) {

@@ -38,7 +38,7 @@ if (!empty($errors)) {
 
 try {
     $pdo = getPDO();
-    $sql = 'INSERT INTO ' . DB_TABLE_EVENTS . ' (title, event_date, location, description) VALUES (:title, :event_date, :location, :description)';
+    $sql = 'INSERT INTO ' . table('events') . ' (title, event_date, location, description) VALUES (:title, :event_date, :location, :description)';
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':title' => $title,

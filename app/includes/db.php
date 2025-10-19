@@ -36,4 +36,16 @@ function getPDO(): PDO
     }
 }
 
+/**
+ * Return a fully prefixed table name.
+ * Example: table('events') -> 'wp_events' if DB_TABLE_PREFIX is 'wp_'
+ */
+function table(string $name): string
+{
+    if (!defined('DB_TABLE_PREFIX')) {
+        return $name;
+    }
+    return DB_TABLE_PREFIX . $name;
+}
+
 ?>
